@@ -15,6 +15,8 @@
 #include "nimconfig.h"
 #if defined(CONFIG_BT_NIMBLE_ROLE_PERIPHERAL)
 
+#include <Arduino.h>
+
 #include "NimBLECharacteristic.h"
 #include "NimBLE2904.h"
 #include "NimBLEDevice.h"
@@ -475,7 +477,7 @@ void NimBLECharacteristic::setValue(const uint8_t* data, size_t length) {
 
     portENTER_CRITICAL(&m_valMux);
     m_value = std::string((char*)data, length);
-    m_timestamp = time(nullptr);
+    m_timestamp = millis();
     portEXIT_CRITICAL(&m_valMux);
 
     NIMBLE_LOGD(LOG_TAG, "<< setValue");
